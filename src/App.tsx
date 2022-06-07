@@ -1,58 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
-import './App.css';
+import React, { useEffect } from "react";
+import logo from "./logo.svg";
+import Login from "./views/Login";
+import { Container } from "react-bootstrap";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+
+import { useAppDispatch, useAppSelector } from "./hooks";
+import { login, logout } from "./app/reducers/logginSlice";
+import { useSelector } from "react-redux";
+import Home from "./views/Home";
+import { useAuth } from "./hooks/index";
+import { useState } from "react";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
-    </div>
-  );
+  const dispatch = useAppDispatch();
+  const isLogged = useAppSelector((state) => state.isLogged.value);
+  const access_token = new URLSearchParams(
+    window.location.hash.substring(1)
+  ).get("access_token");
+
+  const local_token = useAuth(access_token);
+
+  useEffect(() => {
+    local_token ? dispatch(login()) : dispatch(logout());
+  }, [local_token]);
+
+  return <div>{isLogged ? <Home token={local_token} /> : <Login />}</div>;
 }
 
 export default App;
