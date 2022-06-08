@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 import MyLibrary, { libraryDocType } from "./MyLibrary";
 import Track from "../components/Track";
 import { db } from "../config/firebase";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs, onSnapshot, query, where } from "firebase/firestore";
 import { set_library } from "../app/reducers/librarySlice";
 
 type Props = {
@@ -25,6 +25,7 @@ export type TrackType = {
   uri: string | null;
   albumName: string;
   albumImage: string;
+  track_id: string;
 };
 
 const Home: React.FunctionComponent<Props> = (props: Props) => {
@@ -32,12 +33,12 @@ const Home: React.FunctionComponent<Props> = (props: Props) => {
   const userInfo: any = useAppSelector((state) => state.userInfo.userInfo);
 
   const access_token = useAuth(props.token);
-
   const [search, setSearch] = useState<string | null>("");
   const [searchResults, setSearchResults] = useState([] as TrackType[]);
   const [newReleases, setNewReleases] = useState([] as TrackType[]);
   const [library, setLibrary] = useState([] as libraryDocType[]);
-
+  
+  console.log(searchResults)
   const logoutSession = () => {
     dispatch(logout());
     window.localStorage.removeItem("token");
@@ -79,7 +80,6 @@ const Home: React.FunctionComponent<Props> = (props: Props) => {
 
               return minutos + ":" + segundos;
             };
-
             return {
               artist: track.artists[0].name,
               title: track.name,
@@ -87,6 +87,7 @@ const Home: React.FunctionComponent<Props> = (props: Props) => {
               uri: track.uri,
               albumName: track.album.name,
               albumImage: track.album.images[0].url,
+              track_id: track.id
             };
           })
         );
@@ -119,7 +120,6 @@ const Home: React.FunctionComponent<Props> = (props: Props) => {
   }, []);
 
   useEffect(() => {
-    const libraryCollectionRef = collection(db, "userLibrary");
     const getTrackByUser = query(
       collection(db, "userLibrary"),
       where("userId", "==", userInfo.id)
@@ -137,6 +137,24 @@ const Home: React.FunctionComponent<Props> = (props: Props) => {
         );
       })
       .catch((err) => console.log(err.message));
+  }, [userInfo]);
+
+  useEffect(() => {
+    const getTrackByUserRef = query(
+      collection(db, "userLibrary"),
+      where("userId", "==", userInfo.id)
+    );
+
+    const unsubcribe = onSnapshot(getTrackByUserRef, snapshot => {
+      setLibrary(snapshot.docs.map((doc: any) => ({
+        track: doc.data(),
+        id: doc.id
+      })))
+    })
+  
+    return () => {
+      unsubcribe();
+    }
   }, [userInfo])
   
 
@@ -172,17 +190,15 @@ const Home: React.FunctionComponent<Props> = (props: Props) => {
         </Col>
       </Row>
 
-      <Row className='mt-5'>
-        { newReleases.length > 0 ? (newReleases.map((album) => (
-                // <span>hola </span>
-                <Track track={album}/> 
-              )))
-        :
+      <Row className="mt-5">
+        {newReleases.length > 0 ? (
+          newReleases.map((album) => <Track track={album} isNewRelease/>)
+        ) : (
           <h1>No new Releases</h1>
-        }
+        )}
       </Row>
 
-      <Row className='mt-5'>
+      <Row className="mt-5">
         {searchResults.length > 0 ? (
           <Table>
             <thead>

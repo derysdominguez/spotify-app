@@ -13,7 +13,7 @@ const Library = () => {
         {Object.keys(library).length === 0 ? (
           <h1>No items on your Library</h1>
         ) : (
-          library.map((doc: libraryDocType) => <Track key={doc.id} track={doc.track} />)
+          library.map((doc: libraryDocType) => <Track key={doc.id} track={doc.track} isNewRelease={false}/>)
         )}
       </Row>
     </Container>

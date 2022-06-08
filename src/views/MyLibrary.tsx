@@ -33,35 +33,6 @@ const MyLibrary = (props: Props) => {
     window.location.assign('/')
   };
 
-  // useEffect(() => {
-  //   getLibrary();
-  // }, [userInfo]);
-
-  // useEffect(() => {
-  //   dispatch(set_library(library));
-  // }, [library]);
-
-  // const getLibrary = async () => {
-  //   const libraryCollectionRef = collection(db, "userLibrary");
-  //   const getTrackByUser = await query(
-  //     collection(db, "userLibrary"),
-  //     where("userId", "==", userInfo.id)
-  //   );
-
-  //   getDocs(getTrackByUser)
-  //     .then((res) => {
-  //       setLibrary(
-  //         res.docs.map((doc: any) => {
-  //           return {
-  //             track: doc.data(),
-  //             id: doc.id,
-  //           };
-  //         })
-  //       );
-  //     })
-  //     .catch((err) => console.log(err.message));
-  // };
-
   return (
     <Container>
       <Row className="d-flex justify-content-center align-items-center">

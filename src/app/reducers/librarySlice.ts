@@ -14,7 +14,10 @@ const librarySlice = createSlice({
     reducers: {
         set_library(state, action) {
             state.library = action.payload
-        }
+        },
+        // add_track(state, action) {
+        //     state.library
+        // }
     }
 });
 
