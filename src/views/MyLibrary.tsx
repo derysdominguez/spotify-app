@@ -1,23 +1,23 @@
 import React from "react";
 import { collection, getDocs, query, where } from "firebase/firestore";
-// import { compose } from '@reduxjs/toolkit'
-// import { connect } from 'react-redux';
-// import { firestoreConnect } from 'react-redux-firebase'
 import { useState, useEffect } from "react";
 import { db } from "../config/firebase";
-import { Container } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import { TrackType } from "./Home";
-import Track from "../components/Track";
-import { useAppDispatch, useAppSelector } from "../hooks";
+import { useAppDispatch, useAppSelector, useAuth } from "../hooks";
 import { set_library } from "../app/reducers/librarySlice";
 import Library from "../components/library";
+import { logout } from "../app/actions";
+import { Link } from "react-router-dom";
+
+type Props = {
+  token: string | null;
+};
 
 export type libraryDocType = {
   track: TrackType;
   id: string;
 };
-
-type Props = {};
 
 const MyLibrary = (props: Props) => {
   const dispatch = useAppDispatch();
@@ -25,37 +25,77 @@ const MyLibrary = (props: Props) => {
 
   const userInfo: any = useAppSelector((state) => state.userInfo.userInfo);
 
-  useEffect(() => {
-    getLibrary();
-  }, []);
+  const access_token = useAuth(props.token);
 
-  useEffect(() => {
-    dispatch(set_library(library));
-  }, [library]);
-
-  
-  const getLibrary = async () => {
-    const libraryCollectionRef = collection(db, "userLibrary");
-    const getTrackByUser = await query(collection(db, "userLibrary"), where("userId", "==", userInfo.id));
-
-    getDocs(getTrackByUser)
-      .then((res) => {
-        setLibrary(
-          res.docs.map((doc: any) => {
-            return {
-              track: doc.data(),
-              id: doc.id,
-            };
-          })
-        );
-
-        // setLibrary(tracks);
-      })
-      .catch((err) => console.log(err.message));
+  const logoutSession = () => {
+    dispatch(logout());
+    window.localStorage.removeItem("token");
+    window.location.assign('/')
   };
 
+  // useEffect(() => {
+  //   getLibrary();
+  // }, [userInfo]);
+
+  // useEffect(() => {
+  //   dispatch(set_library(library));
+  // }, [library]);
+
+  // const getLibrary = async () => {
+  //   const libraryCollectionRef = collection(db, "userLibrary");
+  //   const getTrackByUser = await query(
+  //     collection(db, "userLibrary"),
+  //     where("userId", "==", userInfo.id)
+  //   );
+
+  //   getDocs(getTrackByUser)
+  //     .then((res) => {
+  //       setLibrary(
+  //         res.docs.map((doc: any) => {
+  //           return {
+  //             track: doc.data(),
+  //             id: doc.id,
+  //           };
+  //         })
+  //       );
+  //     })
+  //     .catch((err) => console.log(err.message));
+  // };
+
   return (
-    <Library />
+    <Container>
+      <Row className="d-flex justify-content-center align-items-center">
+        {Object.keys(userInfo).length === 0 ? null : (
+          <Col className="user-info text-center">
+            <img
+              src={userInfo.images[0].url}
+              alt="profile"
+              className="user-icon"
+            />
+            <span>{userInfo.display_name}</span>
+          </Col>
+        )}
+        <Col xs={2} className="">
+          <Link to="/" className="btn btn-btn btn-outline-success">
+            Export to Spotify
+          </Link>
+        </Col>
+        <Col xs={4}>
+          <h1>My Library</h1>
+        </Col>
+        <Col className="text-center">
+          <Link to="/" className="btn btn-warning btn-lg">
+            Search
+          </Link>
+        </Col>
+        <Col className="text-center">
+          <button onClick={logoutSession} className="btn btn-danger btn-lg">
+            Log Out
+          </button>
+        </Col>
+      </Row>
+      <Library />;
+    </Container>
   );
 };
 

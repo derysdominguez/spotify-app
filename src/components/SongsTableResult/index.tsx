@@ -1,5 +1,5 @@
 import React from "react";
-import { Table } from "react-bootstrap";
+import { Button, Table } from "react-bootstrap";
 import { TrackType } from "../../views/Home";
 
 type Props = {
@@ -15,7 +15,7 @@ const SongsTable: React.FC<Props> = ({ track }) => (
         <td>{track.artist}</td>
         <td>{track.albumName}</td>
         <td>{track.duration}</td>
-        <td>{}</td>
+        <td>{<Button variant="dark">+</Button>}</td>
       </tr>
 );
 

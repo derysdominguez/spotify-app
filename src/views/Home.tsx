@@ -8,7 +8,11 @@ import axios from "axios";
 import SongsTable from "../components/SongsTableResult";
 import { set_user } from "../app/reducers/userSlice";
 import { Link } from "react-router-dom";
-import MyLibrary from "./MyLibrary";
+import MyLibrary, { libraryDocType } from "./MyLibrary";
+import Track from "../components/Track";
+import { db } from "../config/firebase";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { set_library } from "../app/reducers/librarySlice";
 
 type Props = {
   token: string | null;
@@ -17,13 +21,13 @@ type Props = {
 export type TrackType = {
   artist: string;
   title: string;
-  duration: number;
+  duration: number | null;
   uri: string | null;
   albumName: string;
   albumImage: string;
 };
 
-const Home = (props: Props) => {
+const Home: React.FunctionComponent<Props> = (props: Props) => {
   const dispatch = useAppDispatch();
   const userInfo: any = useAppSelector((state) => state.userInfo.userInfo);
 
@@ -31,11 +35,31 @@ const Home = (props: Props) => {
 
   const [search, setSearch] = useState<string | null>("");
   const [searchResults, setSearchResults] = useState([] as TrackType[]);
+  const [newReleases, setNewReleases] = useState([] as TrackType[]);
+  const [library, setLibrary] = useState([] as libraryDocType[]);
 
   const logoutSession = () => {
     dispatch(logout());
     window.localStorage.removeItem("token");
   };
+
+  useEffect(() => {
+    dispatch(set_library(library));
+  }, [library]);
+
+  useEffect(() => {
+    axios
+      .get("https://api.spotify.com/v1/me", {
+        headers: {
+          Authorization: "Bearer " + props.token,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        dispatch(set_user(res.data));
+      })
+      .catch(console.error);
+  }, [access_token]);
 
   useEffect(() => {
     if (!search) return setSearchResults([]);
@@ -71,27 +95,64 @@ const Home = (props: Props) => {
 
   useEffect(() => {
     axios
-      .get("https://api.spotify.com/v1/me", {
-        headers: {
-          Authorization: "Bearer " + access_token,
-          "Content-Type": "application/json",
-        },
-      })
+      .get(
+        "https://api.spotify.com/v1/browse/new-releases?country=US&limit=4&offset=5",
+        {
+          headers: {
+            Authorization: "Bearer " + props.token,
+            "Content-Type": "application/json",
+          },
+        }
+      )
       .then((res) => {
-        dispatch(set_user(res.data));
+        setNewReleases(
+          res.data.albums.items.map((album: any) => {
+            return {
+              artist: album.artists[0].name,
+              title: album.name,
+              uri: album.uri,
+              albumImage: album.images[0].url,
+            };
+          })
+        );
+      });
+  }, []);
+
+  useEffect(() => {
+    const libraryCollectionRef = collection(db, "userLibrary");
+    const getTrackByUser = query(
+      collection(db, "userLibrary"),
+      where("userId", "==", userInfo.id)
+    );
+
+    getDocs(getTrackByUser)
+      .then((res) => {
+        setLibrary(
+          res.docs.map((doc: any) => {
+            return {
+              track: doc.data(),
+              id: doc.id,
+            };
+          })
+        );
       })
-      .catch(console.error);
-  }, [access_token]);
+      .catch((err) => console.log(err.message));
+  }, [userInfo])
+  
 
   return (
     <Container>
       <Row className="d-flex justify-content-center align-items-center">
-        {Object.keys(userInfo).length === 0 ? null : 
+        {Object.keys(userInfo).length === 0 ? null : (
           <Col className="user-info text-center">
-            <img src={userInfo.images[0].url} alt="profile" className="user-icon" />
+            <img
+              src={userInfo.images[0].url}
+              alt="profile"
+              className="user-icon"
+            />
             <span>{userInfo.display_name}</span>
           </Col>
-        }
+        )}
         <Col xs={6}>
           <Form.Control
             type="search"
@@ -100,9 +161,9 @@ const Home = (props: Props) => {
           />
         </Col>
         <Col className="text-center">
-          <button className="btn btn-warning btn-lg">
+          <Link to="/library" className="btn btn-warning btn-lg">
             My library
-          </button>
+          </Link>
         </Col>
         <Col className="text-center">
           <button onClick={logoutSession} className="btn btn-danger btn-lg">
@@ -111,32 +172,38 @@ const Home = (props: Props) => {
         </Col>
       </Row>
 
-      <Row bg="success">New Realeses</Row>
-
-      <Row>
-        {searchResults.length > 0 ?
-        <Table>
-          <thead>
-            <tr>
-              <th></th>
-              <th>Title</th>
-              <th>Artist</th>
-              <th>Album</th>
-              <th>Duration</th>
-              <th>My library</th>
-            </tr>
-          </thead>
-          <tbody>
-            {searchResults.map((track) => (
-              <SongsTable track={track} />
-            ))}
-          </tbody>
-        </Table> :
-        <h1>No results</h1>
+      <Row className='mt-5'>
+        { newReleases.length > 0 ? (newReleases.map((album) => (
+                // <span>hola </span>
+                <Track track={album}/> 
+              )))
+        :
+          <h1>No new Releases</h1>
         }
       </Row>
-      <Row>
-        <MyLibrary />
+
+      <Row className='mt-5'>
+        {searchResults.length > 0 ? (
+          <Table>
+            <thead>
+              <tr>
+                <th></th>
+                <th>Title</th>
+                <th>Artist</th>
+                <th>Album</th>
+                <th>Duration</th>
+                <th>My library</th>
+              </tr>
+            </thead>
+            <tbody>
+              {searchResults.map((track) => (
+                <SongsTable track={track} />
+              ))}
+            </tbody>
+          </Table>
+        ) : (
+          <h1>No results</h1>
+        )}
       </Row>
     </Container>
   );
