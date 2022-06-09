@@ -25,6 +25,11 @@ const Track: React.FC<Props> = ({ track, isNewRelease }) => {
     });
   };
 
+  const handlePlayAlbum = () => {
+    const uri:any = track.uri
+    window.open(uri, '_blank')
+  }
+
   return (
     <Col
       className="track py-2"
@@ -35,9 +40,13 @@ const Track: React.FC<Props> = ({ track, isNewRelease }) => {
       xs={isNewRelease ? { span: 10 } : { span: 12 }}
       >
       <div>
-      {isNewRelease ? null : (
+      {isNewRelease ? (
+        <Button onClick={handlePlayAlbum} className="action-btn mt-2">
+          <i className="bi bi-play-fill" />
+        </Button>
+      ) : (
         <Button onClick={handleRemove} className="action-btn mt-2">
-          <span>-</span>
+          <i className="bi bi-dash" />
         </Button>
       )}
         <img src={track.albumImage} alt={track.title} className="albumImage" />

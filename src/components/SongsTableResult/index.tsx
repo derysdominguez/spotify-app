@@ -61,11 +61,11 @@ const SongsTable: React.FC<Props> = ({ track }) => {
       <td>
         {OnLibrary(track.track_id) ? (
           <Button className="btn action-btn btn-danger" onClick={handleRemove}>
-            -
+            <i className="bi bi-dash" />
           </Button>
         ) : (
           <Button className="action-btn" onClick={handleAdd}>
-            +
+            <i className="bi bi-plus" />
           </Button>
         )}
         {/* {
