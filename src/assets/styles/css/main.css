@@ -197,6 +197,41 @@ body {
       color: #000;
       font-size: 2.5rem; }
 
+.modal .modal-content {
+  background-color: #1e1e1e; }
+  .modal .modal-content .modal-header {
+    border: none; }
+    .modal .modal-content .modal-header .btn-close:hover {
+      background-color: #2d2d2d; }
+  .modal .modal-content .modal-body input {
+    border: 0px;
+    border-radius: none;
+    border-bottom: 2px solid #fffefe;
+    font-size: 1.2rem;
+    background-color: transparent; }
+    @media (max-width: 991px) {
+      .modal .modal-content .modal-body input {
+        padding: 0.9rem 0.6rem 0.3rem;
+        font-size: 1.3rem; } }
+    .modal .modal-content .modal-body input:placeholder {
+      color: #9d9d9d;
+      font-weight: normal; }
+  .modal .modal-content .modal-footer {
+    border: none; }
+    .modal .modal-content .modal-footer .btn-primary {
+      background-color: #16883e;
+      border: 1px solid #16883e; }
+
+.toast-container {
+  margin-top: 2rem;
+  margin-left: 2rem; }
+  .toast-container .toast .toast-header {
+    background-color: rgba(0, 0, 0, 0.437); }
+  .toast-container .toast .toast-body {
+    background-color: #16883eb7; }
+    .toast-container .toast .toast-body a {
+      color: #0750af; }
+
 .library {
   display: flex;
   justify-content: space-between;
@@ -208,7 +243,3 @@ body {
     font-family: Arial, Helvetica, sans-serif;
     padding: 1rem;
     border: 2px; }
-
-.toast-container {
-  margin-top: 2rem;
-  margin-right: 2rem; }

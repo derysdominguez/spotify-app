@@ -48,6 +48,7 @@ const MyLibrary = (props: Props) => {
   const [showToast, setShowToast] = useState(false);
   const [playlistName, setPlaylistName] = useState("");
   const [playlistDescription, setPlaylistDescription] = useState("");
+  const [playlistLink, setPlaylistLink] = useState("");
 
   const logoutSession = () => {
     dispatch(logout());
@@ -72,6 +73,7 @@ const MyLibrary = (props: Props) => {
         }
       )
       .then((res) => {
+        setPlaylistLink(res.data.uri);
         const uris = library.map((doc: any) => {
           return doc.track.uri;
         });
@@ -163,9 +165,9 @@ const MyLibrary = (props: Props) => {
 
       <Library />
 
-      <Modal show={show} onHide={() => setShow(false)}>
+      <Modal show={show} onHide={() => setShow(false)} className="modal" centered>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>Export your Library as Spotify Playlist</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleExport}>
@@ -200,12 +202,12 @@ const MyLibrary = (props: Props) => {
           </Button>
         </Modal.Footer>
       </Modal>
-      <ToastContainer position="top-end">
-        <Toast onClose={() => setShowToast(false)} show={showToast}>
+      <ToastContainer position="top-start">
+        <Toast onClose={() => setShowToast(false)} show={showToast} delay={6000} autohide>
           <Toast.Header>
-            <strong className="me-auto">Bootstrap</strong>
+            <strong className="me-auto">Playlist Created Succesfully</strong>
           </Toast.Header>
-          <Toast.Body>Playlist Created Succesfully</Toast.Body>
+          <Toast.Body>Go to <a href={playlistLink}>{playlistName}</a></Toast.Body>
         </Toast>
       </ToastContainer>
     </Container>
