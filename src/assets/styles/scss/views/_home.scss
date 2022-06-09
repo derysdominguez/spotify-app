@@ -1,26 +1,41 @@
-table {
+.home {
+    .bckgradient{
+        z-index: 1;
+        height: 15rem;
+        background-color: red;
+        position: absolute;
+    }
+
+  table {
     tr {
-        display: table-row;
-        
-        td{
-            vertical-align: middle;
-            
-            img {
-                max-width: 3rem;
-            }
+      display: table-row;
+
+      td {
+        vertical-align: middle;
+
+        img {
+          max-width: 3rem;
         }
+      }
     }
-}
+  }
 
-.user-info{
-    .user-icon{
-        object-fit: cover;
-        width: 2.3rem;
-        height: 2.3rem;
-        border-radius: 50%;
+  .user-info {
+    .user-icon {
+      object-fit: cover;
+      width: 2.3rem;
+      height: 2.3rem;
+      border-radius: 50%;
     }
 
-    span{
-        padding-left: 10px;
+    span {
+      padding-left: 10px;
     }
+  }
+
+  .swiper-slide{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }

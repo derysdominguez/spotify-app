@@ -1,0 +1,14 @@
+.myLibrary{
+    .user-info {
+        .user-icon {
+          object-fit: cover;
+          width: 2.3rem;
+          height: 2.3rem;
+          border-radius: 50%;
+        }
+    
+        span {
+          padding-left: 10px;
+        }
+      }
+}

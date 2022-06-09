@@ -26,10 +26,10 @@ const Track: React.FC<Props> = ({ track, isNewRelease }) => {
   };
 
   return (
-    <Col className="track" md={{ span: 3 }}>
-      <img src={track.albumImage} alt={track.title} />
-      <h2>{track.title}</h2>
-      <h4>{track.artist}</h4>
+    <Col className="track" md={isNewRelease ? {span: 12} : { span: 3 }}>
+      <img src={track.albumImage} alt={track.title} className="albumImage"/>
+      <p className="trackName">{track.title}</p>
+      <p className="artist">{track.artist}</p>
       { isNewRelease ? null:
       <Button variant="dark" onClick={handleRemove}>
         -

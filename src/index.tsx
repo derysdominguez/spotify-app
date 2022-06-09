@@ -8,6 +8,8 @@ import store  from './app/store';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './assets/styles/css/main.css'
 
+import "swiper/css/bundle";
+
 const container = document.getElementById('root')!;
 const root = createRoot(container);
 

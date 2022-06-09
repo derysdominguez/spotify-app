@@ -120,7 +120,7 @@ const MyLibrary = (props: Props) => {
     };
   }, [userInfo]);
   return (
-    <Container>
+    <Container className="myLibrary">
       <Row className="d-flex justify-content-center align-items-center">
         {Object.keys(userInfo).length === 0 ? null : (
           <Col className="user-info text-center">

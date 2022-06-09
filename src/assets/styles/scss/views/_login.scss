@@ -1,3 +1,28 @@
-.container{
-    height: 100vh;
+.login {
+    background: url("../../img/cool-background.svg");
+    background-size: cover;
+    background-color: #191414;
+
+  .container {
+    > .row {
+      height: 100vh;
+
+      .loginInfo {
+        background-color: #0000007b;
+        border-radius: 1rem;
+        height: 35rem;
+
+        .container {
+          background: center no-repeat
+            url("../../img/spotify_logotype_green.png");
+          background-size: contain;
+          height: 10rem;
+        }
+
+        span {
+          font-size: 2rem;
+        }
+      }
+    }
+  }
 }

@@ -19,6 +19,8 @@ import {
   where,
 } from "firebase/firestore";
 import { set_library } from "../app/reducers/librarySlice";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination } from "swiper";
 
 type Props = {
   token: string | null;
@@ -66,8 +68,8 @@ const Home: React.FunctionComponent<Props> = (props: Props) => {
         dispatch(set_user(res.data));
       })
       .catch((err) => {
-        if(err.response.data.error.message === "The access token expired"){
-          logoutSession()
+        if (err.response.data.error.message === "The access token expired") {
+          logoutSession();
         }
       });
   }, [access_token]);
@@ -107,7 +109,7 @@ const Home: React.FunctionComponent<Props> = (props: Props) => {
   useEffect(() => {
     axios
       .get(
-        "https://api.spotify.com/v1/browse/new-releases?country=US&limit=4&offset=5",
+        "https://api.spotify.com/v1/browse/new-releases?country=US&limit=15&offset=5",
         {
           headers: {
             Authorization: "Bearer " + props.token,
@@ -170,8 +172,9 @@ const Home: React.FunctionComponent<Props> = (props: Props) => {
   }, [userInfo]);
 
   return (
-    <Container>
-      <Row className="d-flex justify-content-center align-items-center">
+    <Container className="home">
+      <div className="bckgradient"></div>
+      <Row className="d-flex justify-content-center align-items-center py-5">
         {Object.keys(userInfo).length === 0 ? null : (
           <Col className="user-info text-center">
             <img
@@ -202,11 +205,22 @@ const Home: React.FunctionComponent<Props> = (props: Props) => {
       </Row>
 
       <Row className="mt-5">
-        {newReleases.length > 0 ? (
-          newReleases.map((album) => <Track track={album} isNewRelease />)
-        ) : (
-          <h1>No new Releases</h1>
-        )}
+        <Swiper
+          slidesPerView={3}
+          spaceBetween={30}
+          pagination={{
+            clickable: true,
+          }}
+          modules={[Pagination]}
+          className="mySwiper"
+        >
+          
+            {newReleases.length > 0 ? (
+              newReleases.map((album) => <SwiperSlide><Track track={album} isNewRelease /></SwiperSlide>)
+            ) : (
+              <h1>No new Releases</h1>
+            )}
+        </Swiper>
       </Row>
 
       <Row className="mt-5">

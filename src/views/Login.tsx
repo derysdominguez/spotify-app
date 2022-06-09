@@ -1,7 +1,7 @@
 import React from "react";
 
 import axios from "axios";
-import { Container } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import { useAuth } from "../hooks/index";
 
 const client_id = "3256515de1b54e59a77c805ef0bf193b";
@@ -29,11 +29,28 @@ const Login = () => {
   };
 
   return (
-    <Container className="d-flex align-items-center justify-content-center">
-      <button className="btn btn-success btn-lg" onClick={handleClick}>
-        Log in with Spotify
-      </button>
+    <div className="login">
+    <Container>
+      <Row className="d-flex align-items-center justify-content-center">
+        <Col md={{ span: 4 }} className="loginInfo p-5">
+          <Row>
+            <Container className="mb-5" />
+
+            <div>
+              <span>Your library Spotify App</span>
+              <p>Search music, add to your library and export as a playlist!</p>
+            </div>
+            <button
+              className="btn btn-success btn-lg mt-5 py-3"
+              onClick={handleClick}
+            >
+              Log in with Spotify
+            </button>
+          </Row>
+        </Col>
+      </Row>
     </Container>
+    </div>
   );
 };
 
