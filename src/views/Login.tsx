@@ -4,8 +4,8 @@ import axios from "axios";
 import { Col, Container, Row } from "react-bootstrap";
 import { useAuth } from "../hooks/index";
 
-const client_id = "3256515de1b54e59a77c805ef0bf193b";
-const redirect_uri = "http://localhost:3000/";
+const client_id = process.env.REACT_APP_CLIENT_ID;
+const redirect_uri = process.env.REACT_APP_REDIRECT_URI;
 const api_uri = "https://accounts.spotify.com/authorize";
 const scope = [
   "user-read-private",

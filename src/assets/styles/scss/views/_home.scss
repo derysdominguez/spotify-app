@@ -48,6 +48,10 @@
   }
 
   table {
+    // border-collapse: inherit;
+    thead{
+      border-bottom: 1px solid rgb(157, 157, 157);  
+    }
     tr {
       display: table-row;
       border: 1px solid rgba(255, 255, 0, 0);
