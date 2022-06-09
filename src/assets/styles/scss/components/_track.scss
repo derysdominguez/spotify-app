@@ -2,49 +2,65 @@
   text-align: center;
   height: 100%;
   font-size: 1rem;
- > div{
-     background-color: #181818;
-     padding: 2rem;
+  > div {
+    background-color: #181818;
+    padding: 2rem;
     border-radius: 24px;
- }
+  }
 
- > div:hover{
-
-    .action-btn{
-        opacity: 1;
+  > div:hover {
+    .action-btn {
+      opacity: 1;
     }
- }
+  }
 
   img.albumImage {
     max-width: 10rem;
+    border-radius: 12px;
   }
-  div.trackName{
-      max-height: 23px;
-      overflow: hidden;
-      position: relative;
+  div.trackName {
+    max-height: 23px;
+    overflow: hidden;
+    position: relative;
 
-      white-space: unset;
-      word-break: break-all;
+    white-space: unset;
+    word-break: break-all;
 
-      white-space: nowrap;
-      text-overflow: ellipsis;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 
-  div.artist{
+  div.artist {
     color: rgb(174, 174, 174);
-  }  
 
-  .action-btn{
-      margin-left: 0.5rem;
+    max-height: 23px;
+    overflow: hidden;
+    position: relative;
+
+    white-space: unset;
+    word-break: break-all;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .action-btn {
+    width: 2.5rem;
+    height: 2.5rem;
+    margin-left: 0.5rem;
     position: absolute;
     opacity: 0;
 
-    font-size: 1.3rem;
     border-radius: 50% 50%;
     line-height: 1.5rem;
-
-    box-shadow: 5px 5px 8px rgba(0,0,0,.5);
+    
+    box-shadow: 5px 5px 8px rgba(0, 0, 0, 0.5);
     background-color: #1db954;
     border: none;
+    
+    span{
+      color: #000;
+      font-size: 2.5rem;
+    }
   }
 }

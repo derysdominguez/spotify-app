@@ -51,6 +51,9 @@ body {
   align-items: center;
   justify-content: center; }
 
+.home .swiper-pagination-bullet {
+  background-color: white; }
+
 .myLibrary .user-info .user-icon {
   object-fit: cover;
   width: 2.3rem;
@@ -71,7 +74,8 @@ body {
   .track > div:hover .action-btn {
     opacity: 1; }
   .track img.albumImage {
-    max-width: 10rem; }
+    max-width: 10rem;
+    border-radius: 12px; }
   .track div.trackName {
     max-height: 23px;
     overflow: hidden;
@@ -81,17 +85,28 @@ body {
     white-space: nowrap;
     text-overflow: ellipsis; }
   .track div.artist {
-    color: #aeaeae; }
+    color: #aeaeae;
+    max-height: 23px;
+    overflow: hidden;
+    position: relative;
+    white-space: unset;
+    word-break: break-all;
+    white-space: nowrap;
+    text-overflow: ellipsis; }
   .track .action-btn {
+    width: 2.5rem;
+    height: 2.5rem;
     margin-left: 0.5rem;
     position: absolute;
     opacity: 0;
-    font-size: 1.3rem;
     border-radius: 50% 50%;
     line-height: 1.5rem;
     box-shadow: 5px 5px 8px rgba(0, 0, 0, 0.5);
     background-color: #1db954;
     border: none; }
+    .track .action-btn span {
+      color: #000;
+      font-size: 2.5rem; }
 
 .library {
   display: flex;

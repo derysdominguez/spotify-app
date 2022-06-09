@@ -32,7 +32,7 @@ const Login = () => {
     <div className="login">
     <Container>
       <Row className="d-flex align-items-center justify-content-center">
-        <Col md={{ span: 4 }} className="loginInfo p-5">
+        <Col md={{ span: 8 }} lg={{ span: 5 }} sm={{span: 10}} xs={{span: 11}} className="loginInfo p-5">
           <Row>
             <Container className="mb-5" />
 

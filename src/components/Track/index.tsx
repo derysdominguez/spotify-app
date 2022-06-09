@@ -28,14 +28,15 @@ const Track: React.FC<Props> = ({ track, isNewRelease }) => {
   return (
     <Col
       className="track py-2"
-      lg={isNewRelease ? { span: 12 } : { span: 3 }}
+      xl={isNewRelease ? { span: 12 } : { span: 3 }}
+      lg={isNewRelease ? { span: 12 } : { span: 4 }}
       md={isNewRelease ? { span: 12 } : { span: 6 }}
       sm={isNewRelease ? { span: 12 } : { span: 12 }}
       >
       <div>
       {isNewRelease ? null : (
         <Button onClick={handleRemove} className="action-btn mt-2">
-          #268A
+          <span>-</span>
         </Button>
       )}
         <img src={track.albumImage} alt={track.title} className="albumImage" />
