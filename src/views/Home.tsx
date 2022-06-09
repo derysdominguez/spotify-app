@@ -204,6 +204,7 @@ const Home: React.FunctionComponent<Props> = (props: Props) => {
         </Col>
       </Row>
 
+        <h1>New Releases</h1>
       <Row className="mt-5">
         <Swiper
           slidesPerView={3}
