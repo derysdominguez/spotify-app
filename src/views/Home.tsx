@@ -45,6 +45,7 @@ const Home: React.FunctionComponent<Props> = (props: Props) => {
   const [searchResults, setSearchResults] = useState([] as TrackType[]);
   const [newReleases, setNewReleases] = useState([] as TrackType[]);
   const [library, setLibrary] = useState([] as libraryDocType[]);
+  const [user_access, setUserAccess] = useState(true);
 
   console.log(searchResults);
   const logoutSession = () => {
@@ -68,6 +69,9 @@ const Home: React.FunctionComponent<Props> = (props: Props) => {
         dispatch(set_user(res.data));
       })
       .catch((err) => {
+        if (err.response.status == 403) {
+          setUserAccess(false);
+        }
         if (err.response.data.error.message === "The access token expired") {
           logoutSession();
         }
@@ -171,7 +175,7 @@ const Home: React.FunctionComponent<Props> = (props: Props) => {
     };
   }, [userInfo]);
 
-  return (
+  return user_access ? (
     <Container className="home">
       <div className="bckgradient"></div>
       <Row className="d-flex justify-content-center align-items-center py-5">
@@ -268,6 +272,18 @@ const Home: React.FunctionComponent<Props> = (props: Props) => {
         ) : (
           <h1>No results</h1>
         )}
+      </Row>
+    </Container>
+  ) : (
+    <Container className="d-flex justify-content-center align-items-center error-access text-center">
+      <Row>
+        <h2>User not registered in the Developer Dashboard</h2>
+        <h4>Ask the admin for permissions to access the app.</h4>
+        <button onClick={logoutSession} className="btn">
+          <i className="bi bi-box-arrow-in-left">
+            <span className="d-none d-lg-inline-block">Logout</span>
+          </i>
+        </button>
       </Row>
     </Container>
   );

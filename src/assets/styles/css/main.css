@@ -126,6 +126,13 @@ body {
 .home .swiper-pagination-bullet {
   background-color: white; }
 
+.error-access {
+  height: 100vh; }
+  .error-access .btn:hover .bi {
+    color: #16883e; }
+    .error-access .btn:hover .bi span {
+      color: #16883e; }
+
 .myLibrary .user-info .user-icon {
   object-fit: cover;
   width: 2.3rem;
@@ -210,6 +217,7 @@ body {
     .modal .modal-content .modal-header .btn-close:hover {
       background-color: #2d2d2d; }
   .modal .modal-content .modal-body input {
+    color: #16883e;
     border: 0px;
     border-radius: none;
     border-bottom: 2px solid #fffefe;

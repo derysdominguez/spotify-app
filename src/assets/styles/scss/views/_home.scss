@@ -139,3 +139,18 @@
     background-color: white;
   }
 }
+
+.error-access{
+  height: 100vh;
+
+  .btn:hover{
+    .bi {
+      color: #16883e;
+
+      span {
+        color: #16883e;
+      }
+    }
+    
+  }
+}
