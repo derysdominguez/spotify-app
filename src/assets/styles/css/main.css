@@ -4,6 +4,15 @@
 body {
   background-color: #121212; }
 
+.bckgradient {
+  z-index: -1;
+  height: 15rem;
+  width: 100%;
+  left: 0;
+  background: black;
+  background: linear-gradient(0deg, #121212 20%, #353434 100%);
+  position: absolute; }
+
 .login {
   background: url("../../img/cool-background.svg");
   background-size: cover;
@@ -20,15 +29,6 @@ body {
         height: 10rem; }
       .login .container > .row .loginInfo span {
         font-size: 2rem; }
-
-.home .bckgradient {
-  z-index: -1;
-  height: 15rem;
-  width: 100%;
-  left: 0;
-  background: black;
-  background: linear-gradient(0deg, #121212 20%, #353434 100%);
-  position: absolute; }
 
 .home table tr {
   display: table-row; }
@@ -62,9 +62,36 @@ body {
 
 .track {
   text-align: center;
-  height: 20rem; }
+  height: 100%;
+  font-size: 1rem; }
+  .track > div {
+    background-color: #181818;
+    padding: 2rem;
+    border-radius: 24px; }
+  .track > div:hover .action-btn {
+    opacity: 1; }
   .track img.albumImage {
     max-width: 10rem; }
+  .track div.trackName {
+    max-height: 23px;
+    overflow: hidden;
+    position: relative;
+    white-space: unset;
+    word-break: break-all;
+    white-space: nowrap;
+    text-overflow: ellipsis; }
+  .track div.artist {
+    color: #aeaeae; }
+  .track .action-btn {
+    margin-left: 0.5rem;
+    position: absolute;
+    opacity: 0;
+    font-size: 1.3rem;
+    border-radius: 50% 50%;
+    line-height: 1.5rem;
+    box-shadow: 5px 5px 8px rgba(0, 0, 0, 0.5);
+    background-color: #1db954;
+    border: none; }
 
 .library {
   display: flex;
@@ -74,7 +101,7 @@ body {
   border: 1px solid lightblue;
   border-radius: 20px;
   height: 100%; }
-  .library div {
+  .library div.row {
     font-family: Arial, Helvetica, sans-serif;
     padding: 1rem;
     border: 2px; }

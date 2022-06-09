@@ -121,7 +121,8 @@ const MyLibrary = (props: Props) => {
   }, [userInfo]);
   return (
     <Container className="myLibrary">
-      <Row className="d-flex justify-content-center align-items-center">
+      <div className="bckgradient"></div>
+      <Row className="d-flex justify-content-center align-items-center  py-5">
         {Object.keys(userInfo).length === 0 ? null : (
           <Col className="user-info text-center">
             <img

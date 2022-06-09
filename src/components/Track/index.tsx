@@ -8,7 +8,7 @@ import { libraryDocType } from "../../views/MyLibrary";
 
 type Props = {
   track: TrackType;
-  isNewRelease: boolean
+  isNewRelease: boolean;
 };
 
 const Track: React.FC<Props> = ({ track, isNewRelease }) => {
@@ -26,15 +26,22 @@ const Track: React.FC<Props> = ({ track, isNewRelease }) => {
   };
 
   return (
-    <Col className="track" md={isNewRelease ? {span: 12} : { span: 3 }}>
-      <img src={track.albumImage} alt={track.title} className="albumImage"/>
-      <p className="trackName">{track.title}</p>
-      <p className="artist">{track.artist}</p>
-      { isNewRelease ? null:
-      <Button variant="dark" onClick={handleRemove}>
-        -
-      </Button>
-      }
+    <Col
+      className="track py-2"
+      lg={isNewRelease ? { span: 12 } : { span: 3 }}
+      md={isNewRelease ? { span: 12 } : { span: 6 }}
+      sm={isNewRelease ? { span: 12 } : { span: 12 }}
+      >
+      <div>
+      {isNewRelease ? null : (
+        <Button onClick={handleRemove} className="action-btn mt-2">
+          #268A
+        </Button>
+      )}
+        <img src={track.albumImage} alt={track.title} className="albumImage" />
+        <div className="trackName mt-2">{track.title}</div>
+        <div className="artist mt-2">{track.artist}</div>
+      </div>
     </Col>
   );
 };
