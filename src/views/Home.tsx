@@ -176,38 +176,56 @@ const Home: React.FunctionComponent<Props> = (props: Props) => {
       <div className="bckgradient"></div>
       <Row className="d-flex justify-content-center align-items-center py-5">
         {Object.keys(userInfo).length === 0 ? null : (
-          <Col className="user-info text-center">
+          <Col className="user-info text-center" xs={1} sm={2}>
             <img
               src={userInfo.images[0].url}
               alt="profile"
               className="user-icon"
             />
-            <span>{userInfo.display_name}</span>
+            <span className="d-none d-sm-inline-block">
+              {userInfo.display_name}
+            </span>
           </Col>
         )}
-        <Col xs={6}>
-          <Form.Control
+        <Col xs={7} sm={5} lg={6}>
+          <input
             type="search"
             placeholder="Search Music on Spotify"
             onChange={(event) => setSearch(event.target.value)}
           />
         </Col>
-        <Col className="text-center">
-          <Link to="/library" className="btn btn-warning btn-lg">
-            My library
+        <Col className="text-center" xs={1} sm={3} lg={2}>
+          <Link to="/library">
+            <button className="btn link">
+              <i className="bi bi-collection">
+                <span className="d-none d-sm-inline-block">My Library</span>
+              </i>
+            </button>
           </Link>
         </Col>
-        <Col className="text-center">
-          <button onClick={logoutSession} className="btn btn-danger btn-lg">
-            Log Out
+        <Col className="text-center" xs={1} lg={2}>
+          <button onClick={logoutSession} className="btn">
+            <i className="bi bi-box-arrow-in-left">
+              <span className="d-none d-lg-inline-block">Logout</span>
+            </i>
           </button>
         </Col>
       </Row>
 
-        <h1>New Releases</h1>
+      <h1>New Releases</h1>
       <Row className="mt-5">
         <Swiper
-          slidesPerView={3}
+          breakpoints={{
+            320: {
+              slidesPerView: 1,
+            },
+            576: {
+              slidesPerView: 2,
+            },
+            768: {
+              slidesPerView: 3,
+            },
+          }}
           spaceBetween={30}
           pagination={{
             clickable: true,
@@ -215,12 +233,15 @@ const Home: React.FunctionComponent<Props> = (props: Props) => {
           modules={[Pagination]}
           className="mySwiper"
         >
-          
-            {newReleases.length > 0 ? (
-              newReleases.map((album) => <SwiperSlide><Track track={album} isNewRelease /></SwiperSlide>)
-            ) : (
-              <h1>No new Releases</h1>
-            )}
+          {newReleases.length > 0 ? (
+            newReleases.map((album) => (
+              <SwiperSlide>
+                <Track track={album} isNewRelease />
+              </SwiperSlide>
+            ))
+          ) : (
+            <h1>No new Releases</h1>
+          )}
         </Swiper>
       </Row>
 
@@ -231,10 +252,11 @@ const Home: React.FunctionComponent<Props> = (props: Props) => {
               <tr>
                 <th></th>
                 <th>Title</th>
-                <th>Artist</th>
-                <th>Album</th>
-                <th>Duration</th>
-                <th>My library</th>
+                <th className="d-none d-sm-table-cell">Album</th>
+                <th className="d-none d-sm-table-cell">Duration</th>
+                <th>
+                  <i className="bi bi-collection" />
+                </th>
               </tr>
             </thead>
             <tbody>

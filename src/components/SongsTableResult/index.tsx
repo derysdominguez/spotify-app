@@ -52,17 +52,19 @@ const SongsTable: React.FC<Props> = ({ track }) => {
       <td>
         <img src={track.albumImage} alt={track.albumName} />
       </td>
-      <td>{track.title}</td>
-      <td>{track.artist}</td>
-      <td>{track.albumName}</td>
-      <td>{track.duration}</td>
+      <td>
+        <p className="title">{track.title}</p>
+        <p className="artist">{track.artist}</p>
+      </td>
+      <td className="d-none d-sm-table-cell">{track.albumName}</td>
+      <td className="d-none d-sm-table-cell">{track.duration}</td>
       <td>
         {OnLibrary(track.track_id) ? (
-          <Button variant="dark" onClick={handleRemove}>
+          <Button className="btn action-btn btn-danger" onClick={handleRemove}>
             -
           </Button>
         ) : (
-          <Button variant="dark" onClick={handleAdd}>
+          <Button className="action-btn" onClick={handleAdd}>
             +
           </Button>
         )}

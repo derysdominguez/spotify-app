@@ -11,4 +11,34 @@
           padding-left: 10px;
         }
       }
+
+      button {
+        border-radius: 0;
+        height: 3rem;
+        font-size: 1rem;
+    
+        &:hover {
+          border-bottom: 1px solid #16883e;
+          .bi {
+            color: #16883e;
+    
+            span {
+              color: #16883e;
+            }
+          }
+        }
+    
+        &.link {
+          @media (min-width: 576px) {
+            width: 100%;
+          }
+        }
+      }
+      .bi {
+        @media (min-width: 768px) {
+          &::before {
+            margin-right: 1rem;
+          }
+        }
+      }
 }

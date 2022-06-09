@@ -32,6 +32,7 @@ const Track: React.FC<Props> = ({ track, isNewRelease }) => {
       lg={isNewRelease ? { span: 12 } : { span: 4 }}
       md={isNewRelease ? { span: 12 } : { span: 6 }}
       sm={isNewRelease ? { span: 12 } : { span: 12 }}
+      xs={isNewRelease ? { span: 10 } : { span: 12 }}
       >
       <div>
       {isNewRelease ? null : (

@@ -124,38 +124,43 @@ const MyLibrary = (props: Props) => {
       <div className="bckgradient"></div>
       <Row className="d-flex justify-content-center align-items-center  py-5">
         {Object.keys(userInfo).length === 0 ? null : (
-          <Col className="user-info text-center">
+          <Col xs={2} className="user-info text-center">
             <img
               src={userInfo.images[0].url}
               alt="profile"
               className="user-icon"
             />
-            <span>{userInfo.display_name}</span>
+            <span className="d-none d-md-inline-block">{userInfo.display_name}</span>
           </Col>
         )}
-        <Col xs={2} className="">
-          <Button
-            variant="outline-success"
-            size="sm"
-            onClick={() => setShow(true)}
-          >
-            Export to Spotify
-          </Button>
+        <Col xs={2} md={3} className="text-center">
+          <button onClick={() => setShow(true)}  className="btn">
+          <i className="bi bi-music-note-list">
+              <span className="d-none d-md-inline-block">Export Playlist</span>
+            </i>
+          </button>
         </Col>
-        <Col xs={4}>
-          <h1>My Library</h1>
-        </Col>
-        <Col className="text-center">
-          <Link to="/" className="btn btn-warning btn-lg">
-            Search
+
+        <Col xs={2} md={3} className="text-center">
+          <Link to="/">
+            <button className="btn link">
+              <i className="bi bi-house">
+                <span className="d-none d-md-inline-block">Home</span>
+              </i>
+            </button>
           </Link>
         </Col>
-        <Col className="text-center">
-          <button onClick={logoutSession} className="btn btn-danger btn-lg">
-            Log Out
+        <Col xs={2} md={1} lg={2} className="text-center">
+          <button onClick={logoutSession} className="btn">
+            <i className="bi bi-box-arrow-in-left me-1">
+              <span className="d-none d-lg-inline-block">Logout</span>
+            </i>
           </button>
         </Col>
       </Row>
+
+      <h1>My Library</h1>
+
       <Library />
 
       <Modal show={show} onHide={() => setShow(false)}>
@@ -196,10 +201,7 @@ const MyLibrary = (props: Props) => {
         </Modal.Footer>
       </Modal>
       <ToastContainer position="top-end">
-        <Toast
-          onClose={() => setShowToast(false)}
-          show={showToast}
-        >
+        <Toast onClose={() => setShowToast(false)} show={showToast}>
           <Toast.Header>
             <strong className="me-auto">Bootstrap</strong>
           </Toast.Header>
