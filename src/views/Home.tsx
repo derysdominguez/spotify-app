@@ -21,6 +21,7 @@ import {
 import { set_library } from "../app/reducers/librarySlice";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper";
+import userIcon from '../assets/img/default-user.jpg'
 
 type Props = {
   token: string | null;
@@ -182,7 +183,7 @@ const Home: React.FunctionComponent<Props> = (props: Props) => {
         {Object.keys(userInfo).length === 0 ? null : (
           <Col className="user-info text-center" xs={1} sm={2}>
             <img
-              src={userInfo.images[0].url}
+              src={userInfo.images.length > 0 ? userInfo.images[0].url : userIcon}
               alt="profile"
               className="user-icon"
             />

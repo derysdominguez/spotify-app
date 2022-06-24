@@ -25,6 +25,7 @@ import Library from "../components/library";
 import { logout } from "../app/actions";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import userIcon from '../assets/img/default-user.jpg'
 
 type Props = {
   token: string | null;
@@ -128,7 +129,7 @@ const MyLibrary = (props: Props) => {
         {Object.keys(userInfo).length === 0 ? null : (
           <Col xs={2} className="user-info text-center">
             <img
-              src={userInfo.images[0].url}
+              src={userInfo.images.length > 0 ? userInfo.images[0].url : userIcon}
               alt="profile"
               className="user-icon"
             />
